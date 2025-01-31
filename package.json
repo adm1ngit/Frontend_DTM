@@ -1,0 +1,67 @@
+{
+  "name": "response-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@pdf-lib/fontkit": "^1.1.1",
+    "@react-pdf/renderer": "^4.1.6",
+    "axios": "^1.7.9",
+    "better-react-mathjax": "^2.0.4-beta1",
+    "bootstrap": "^5.3.3",
+    "bootstrap-datepicker": "^1.10.0",
+    "concurrently": "^9.1.2",
+    "cors": "^2.8.5",
+    "cra-template": "1.2.0",
+    "date-fns": "^4.1.0",
+    "docxtemplater": "^3.58.3",
+    "express": "^4.21.2",
+    "file-saver": "^2.0.5",
+    "fontkit": "^2.0.4",
+    "html2canvas": "^1.4.1",
+    "jquery": "^3.7.1",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
+    "jszip": "^3.10.1",
+    "mathjax": "^3.2.2",
+    "node-fetch": "^3.3.2",
+    "pdf-lib": "^1.17.1",
+    "pspdfkit": "^2024.8.1",
+    "puppeteer": "^24.0.0",
+    "react": "^19.0.0",
+    "react-bootstrap": "^2.10.7",
+    "react-datepicker": "^7.6.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.1",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^4.2.4"
+  },
+  "scripts": {
+    "start": "npm run start-react",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "start-react": "react-scripts start",
+    "start-server": "node server.js"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/mathjax": "^0.0.40"
+  }
+}
