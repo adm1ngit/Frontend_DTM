@@ -15,12 +15,10 @@ import "./dashboard.css";
 function Dashboard() {
     const [errorMessage, setErrorMessage] = useState("");
     const [page, setPage] = useState(1);
-    const [hasNextPage, setHasNextPage] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [fileFields, setFileFields] = useState([]);
     const [selectedDate, setSelectedDate] = useState();  // Sana holati
     const [data, setData] = useState([]); // API'dan olingan ma'lumotlar
-    const [successMessage, setSuccessMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [progress, setProgress] = useState(0);
@@ -93,25 +91,39 @@ function Dashboard() {
                 return;
             }
 
-            // Savollarni olish va yuborish
+            // Savollarni olish va yuborish 
             try {
+                // Backup API'dan list_id ni olish
+                const backupResponse = await axios.get(
+                    "https://backup-questions-e95023d8185c.herokuapp.com/backup"
+                );
+                const backupData = backupResponse.data; // Masalan, { "list_id": 47 }
+                const lastId = backupData.list_id;
+
+                // Savollarni olish
                 const questionsResponse = await axios.get(
                     "https://scan-app-9206bf041b06.herokuapp.com/savol/questions/"
                 );
                 const questionsData = questionsResponse.data;
 
+                // Yakuniy ma'lumotlar strukturasi, unda:
+                // - num obyektiga additional_value va class qiymatlari, shuningdek list_id qo'shildi;
+                // - last_id kaliti ham listId qiymatini oladi.
                 const finalData = [
                     {
                         num: {
                             additional_value: parseInt(value),
                             class: parseInt(grade),
+                            list_id: lastId
                         },
+                        last_id: lastId,
                         data: questionsData.data,
                     },
                 ];
 
                 console.log("Final Data Structure:", JSON.stringify(finalData, null, 2));
 
+                // Ma'lumotlarni yuborish
                 await axios.post(
                     "https://scan-app-9206bf041b06.herokuapp.com/api/questions",
                     finalData,
@@ -125,6 +137,7 @@ function Dashboard() {
                 console.error("Xatolik yuz berdi:", error);
                 alert("Xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring.");
             }
+
 
             // DELETE so'rovi yuborish
             try {
