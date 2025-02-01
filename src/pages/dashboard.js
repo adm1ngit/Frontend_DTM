@@ -926,11 +926,11 @@ function Dashboard() {
                                         className="form-control mb-2"
                                     >
                                         <option value="">Mavzu tanlang</option>
-                                        <option value="Matematika">Matematika</option>
                                         <option value="Ona_tili">Ona tili</option>
+                                        <option value="Matematika">Matematika</option>
+                                        <option value="Tarix">Tarix</option>
                                         <option value="Ingliz_tili">Ingliz tili</option>
                                         <option value="Biologiya">Biologiya</option>
-                                        <option value="Tarix">Tarix</option>
                                         <option value="Huquq">Huquq</option>
                                         <option value="Fizika">Fizika</option>
                                         <option value="Kimyo">Kimyo</option>
