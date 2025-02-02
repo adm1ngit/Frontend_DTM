@@ -4,10 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';  // Bootstrap CSS
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Tab } from 'bootstrap';  // Bootstrap JS Tab moduli
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import "jspdf-autotable";
-import { saveAs } from "file-saver";
 import "./dashboard.css";
 
 
@@ -123,7 +120,7 @@ function Dashboard() {
                         data: questionsData.data,
                     },
                 ];
-                // console.log("Final Data Structure:", JSON.stringify(finalData, null, 2));
+                console.log("Final Data Structure:", JSON.stringify(finalData, null, 2));
 
                 // Ma'lumotlarni yuborish
                 await axios.post(
