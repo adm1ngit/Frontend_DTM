@@ -86,7 +86,7 @@ function Dashboard() {
             const userInput = prompt(
                 "Iltimos, quyidagi formatda ma'lumotlarni kiriting:\n" +
                 "Savollar soni, sinf raqami, maktab nomi\n" +
-                "Masalan: 10, 3, Namuna Maktab"
+                "Masalan: 100, 7, Namuna Maktab"
             );
         
             if (!userInput) {
