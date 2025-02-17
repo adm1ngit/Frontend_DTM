@@ -61,13 +61,13 @@ function Dashboard() {
                     setLoading(false);
                     return;
                 }
-
+        
                 // FormData ni to‘ldirish
                 const formData = new FormData();
                 formData.append("file", form.file);
                 formData.append("category", form.category);
                 formData.append("subject", form.subject);
-
+        
                 // Serverga yuborish
                 const response = await axios.post(
                     "https://scan-app-9206bf041b06.herokuapp.com/savol/yuklash/",
@@ -78,20 +78,33 @@ function Dashboard() {
                         },
                     }
                 );
-
+        
                 console.log("Server javobi:", response.data);
             }
-
-            const value = prompt("Nechta savol kerakligini kiriting:");
-            const grade = prompt("Nechinchi sinf uchun savollar kerakligini kiriting:");
-
-            if (!value || isNaN(value) || parseInt(value) <= 0) {
-                alert("Iltimos, to'g'ri savollar sonini kiriting.");
-                setIsLoading(false); // Yuklanish holatini o‘chirish
+        
+            // Bitta prompt orqali barcha ma'lumotlarni olish:
+            const userInput = prompt(
+                "Iltimos, quyidagi formatda ma'lumotlarni kiriting:\n" +
+                "Savollar soni, sinf raqami, maktab nomi\n" +
+                "Masalan: 10, 3, Namuna Maktab"
+            );
+        
+            if (!userInput) {
+                alert("Iltimos, barcha ma'lumotlarni to‘ldiring.");
+                setIsLoading(false);
                 return;
             }
-
-            // Savollarni olish va yuborish 
+        
+            // Ma'lumotlarni ajratib olish:
+            const [value, grade, school] = userInput.split(",").map(item => item.trim());
+        
+            if (!value || isNaN(value) || parseInt(value) <= 0) {
+                alert("Iltimos, to'g'ri savollar sonini kiriting.");
+                setIsLoading(false);
+                return;
+            }
+        
+            // Savollarni olish va yuborish
             try {
                 // Backup API'dan list_id ni olish
                 const backupResponse = await axios.get(
@@ -99,21 +112,20 @@ function Dashboard() {
                 );
                 const backupData = backupResponse.data; // Masalan, { "list_id": 47 }
                 const lastId = backupData.list_id;
-
+        
                 // Savollarni olish
                 const questionsResponse = await axios.get(
                     "https://scan-app-9206bf041b06.herokuapp.com/savol/questions/"
                 );
                 const questionsData = questionsResponse.data;
-
-                // Yakuniy ma'lumotlar strukturasi, unda:
-                // - num obyektiga additional_value va class qiymatlari, shuningdek list_id qo'shildi;
-                // - last_id kaliti ham listId qiymatini oladi.
+        
+                // Yakuniy ma'lumotlar strukturasi
                 const finalData = [
                     {
                         num: {
                             additional_value: parseInt(value),
                             class: parseInt(grade),
+                            school: school,
                             list_id: lastId
                         },
                         last_id: lastId,
@@ -121,7 +133,7 @@ function Dashboard() {
                     },
                 ];
                 console.log("Final Data Structure:", JSON.stringify(finalData, null, 2));
-
+        
                 // Ma'lumotlarni yuborish
                 await axios.post(
                     "https://scan-app-9206bf041b06.herokuapp.com/api/questions",
@@ -133,7 +145,7 @@ function Dashboard() {
 
                 alert("Savollar muvaffaqiyatli yuborildi!");
 
-            } catch (error) {
+            }catch (error) {
                 console.error("Xatolik yuz berdi:", error);
                 alert("Xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring.");
                 setIsLoading(false);
